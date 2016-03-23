@@ -54,10 +54,12 @@ public class CSVPostProcessor extends AbstractBenchmarkPostProcessor {
   }
 
   private void recordData() {
+	System.err.println("Record Data called !!");
     CSVSamplePersistenceAdapter adapter = createCSVFile();
     for (SampleIterator si = new SampleIterator(getWorkDir()); si.hasNext();) {
       BenchmarkProbeValue value = si.next();
       adapter.record(value);
+      //System.err.println("Moving to next record");
     }
     adapter.release();
   }

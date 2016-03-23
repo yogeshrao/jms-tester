@@ -44,13 +44,15 @@ public class CommandLineClient extends AbstractBenchmarkExecutor {
       ApplicationContext appContext = getApplicationContext(configDirs);
       String[] beanNames = appContext
           .getBeanNamesForType(BenchmarkConfig.class);
+      log().info("beanNames size --> " + beanNames.length );
       for (String name : beanNames) {
         BenchmarkConfig cfg = (BenchmarkConfig) appContext.getBean(name);
         cfg.getSpringConfigurations();
         log().info("Submitting benchmark: " + cfg.getBenchmarkId());
         commands.add(new SubmitBenchmarkCommand(cfg));
       }
-    }
+    }    
+   
   }
 
   void run(String[] args) {

@@ -99,6 +99,7 @@ public class BenchmarkConnector {
   }
 
   public void addHandler(BenchmarkCommandHandler handler) {
+	
     this.handler.addHandler(handler);
   }
 

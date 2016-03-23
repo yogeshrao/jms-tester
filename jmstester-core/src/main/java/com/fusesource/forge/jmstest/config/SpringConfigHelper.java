@@ -44,6 +44,7 @@ public class SpringConfigHelper {
     springConfigLocations = new ArrayList<String>();
 
     for (String location : locations) {
+    	System.err.println("location -> " + location);
       File f = new File(location);
       if (f.exists()) {
         if (f.canRead()) {
@@ -59,13 +60,13 @@ public class SpringConfigHelper {
               }
             })) {
               String absFileName = new File(f, fileName).getAbsolutePath();
-              log().debug("Found xml file: " + absFileName);
+              log().info("Found xml file: " + absFileName);
               springConfigLocations.add(absFileName);
             }
           } else if (f.isFile()) {
             if (location.endsWith(".xml")) {
               String absFileName = f.getAbsolutePath();
-              log().debug("Found xml file: " + absFileName);
+              log().info("Found xml file: " + absFileName);
               springConfigLocations.add(absFileName);
             }
           }
@@ -78,12 +79,12 @@ public class SpringConfigHelper {
 
   public void setSpringConfigLocations(String locationString) {
     List<String> locations = new ArrayList<String>();
-    StringTokenizer sTok = new StringTokenizer(locationString, ":");
+    /*StringTokenizer sTok = new StringTokenizer(locationString, ";");
 
     while (sTok.hasMoreTokens()) {
       locations.add(sTok.nextToken());
     }
-
+*/  locations.add(locationString);
     setSpringConfigLocations(locations);
 
   }
@@ -109,6 +110,7 @@ public class SpringConfigHelper {
       String[] configLocations = new String[getSpringConfigLocations().size()];
       int i = 0;
       for (String location : getSpringConfigLocations()) {
+    	  System.err.println("spring location -> " + location);
         configLocations[i++] = "file://" + location;
       }
 

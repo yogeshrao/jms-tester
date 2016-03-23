@@ -92,7 +92,7 @@ public abstract class CachingSamplePersistenceAdapter implements Releaseable,
 
     lastRecorded.put(value.getDescriptor(), new Long(value.getTimestamp()));
 
-    synchronized (valueCache) {
+    //synchronized (valueCache) {
       List<BenchmarkProbeValue> values = valueCache.get(value.getTimestamp());
       if (values == null) {
         values = new ArrayList<BenchmarkProbeValue>();
@@ -103,7 +103,7 @@ public abstract class CachingSamplePersistenceAdapter implements Releaseable,
       if (valueCache.size() > getCacheSize()) {
         flushCache(false);
       }
-    }
+    //}
   }
 
   public void init() {
@@ -138,7 +138,7 @@ public abstract class CachingSamplePersistenceAdapter implements Releaseable,
   }
 
   final protected void flushCache(boolean flushCompletely) {
-    synchronized (valueCache) {
+    //synchronized (valueCache) {
       if (valueCache == null || valueCache.isEmpty()) {
         return;
       }
@@ -155,7 +155,7 @@ public abstract class CachingSamplePersistenceAdapter implements Releaseable,
       }
 
       finishFlush();
-    }
+   // }
   }
 
   protected boolean isComplete(Long timeStamp) {

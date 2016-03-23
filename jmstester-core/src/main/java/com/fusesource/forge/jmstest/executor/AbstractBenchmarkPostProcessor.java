@@ -147,10 +147,12 @@ public abstract class AbstractBenchmarkPostProcessor
       FileInputStream fis = null;
       ObjectInputStream ois = null;
       try {
+    	  System.err.println(workDir.getAbsoluteFile() + "/" + fileNames[current]);
         fis = new FileInputStream(workDir.getAbsoluteFile() + "/"
             + fileNames[current]);
         ois = new ObjectInputStream(fis);
         ReportStatsCommand stats = (ReportStatsCommand) ois.readObject();
+        System.err.println("Size of List from Serialized Obj " + stats.getValues().size() );
         currentIterator = stats.getValues().iterator();
         current++;
       } catch (Exception e) {
@@ -176,9 +178,9 @@ public abstract class AbstractBenchmarkPostProcessor
           return true;
         }
       } else {
-        return false;
+        //return false;
       }
-
+      System.err.println("current is " + current + " fileNames length " +  fileNames.length);
       while (current < fileNames.length) {
         readFile();
         if (currentIterator != null && currentIterator.hasNext()) {

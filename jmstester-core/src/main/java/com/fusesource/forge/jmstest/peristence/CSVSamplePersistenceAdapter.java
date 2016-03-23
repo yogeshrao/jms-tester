@@ -111,7 +111,7 @@ public class CSVSamplePersistenceAdapter extends ProbeAwarePeristenceAdapter {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
 
     Map<ProbeDescriptor, BenchmarkProbeValue> valueMap = new TreeMap<ProbeDescriptor, BenchmarkProbeValue>();
-
+    log().debug("stats recieved after reading " + values);
     for (BenchmarkProbeValue value : values) {
       valueMap.put(value.getDescriptor(), value);
     }
@@ -121,11 +121,14 @@ public class CSVSamplePersistenceAdapter extends ProbeAwarePeristenceAdapter {
         if (values.size() > 0) {
           long timestamp = values.get(0).getTimestamp();
           writer.write("" + timestamp + ",");
+          System.err.println("" + timestamp + ",");
           writer.write(sdf.format(new Date(timestamp * 1000)));
+          System.err.println(sdf.format(new Date(timestamp * 1000)));
           for (ProbeDescriptor pd : getDataSources().keySet()) {
             writer.write(",");
             if (valueMap.containsKey(pd)) {
               writer.write("" + valueMap.get(pd).getValue().toString());
+              System.err.println("" + valueMap.get(pd).getValue().toString());
             }
           }
           writer.write("\n");

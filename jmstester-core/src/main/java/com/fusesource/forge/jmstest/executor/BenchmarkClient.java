@@ -64,6 +64,7 @@ public class BenchmarkClient extends AbstractBenchmarkExecutionContainer {
 
   public AbstractBenchmarkClient addProbeRunner(BenchmarkConfig config) {
     AbstractBenchmarkClient bc = new BenchmarkProbeWrapper(this, config);
+    log().debug("Prepare call value" + bc.prepare());
     if (bc.prepare()) {
       synchronized (activeClients) {
         activeClients.put(bc.getClientId().toString(), bc);

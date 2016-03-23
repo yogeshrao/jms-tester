@@ -34,7 +34,8 @@ public class CpuStat extends AbstractSigarProbe {
 
     try {
       CpuPerc cpu = getSigar().getCpuPerc();
-      return cpu.getCombined() * 100;
+      Number returnVal = cpu.getCombined() * 100;      
+      return returnVal;
     } catch (SigarException se) {
       se.printStackTrace();
     }

@@ -111,7 +111,9 @@ public class BenchmarkProbeWrapper extends AbstractBenchmarkClient {
           log().warn("Cannot prepare prob configuration, there are none");
           return false;
       }
-      for (BenchmarkProbeConfig probeConfig : getConfig().getProbeConfigurations()) {
+      
+      
+      for (BenchmarkProbeConfig probeConfig : getConfig().getProbeConfigurations()) {    	  
           if (getContainer().matchesClient(probeConfig.getClientNames())) {
 
               String[] probeNames = null;
@@ -158,7 +160,7 @@ public class BenchmarkProbeWrapper extends AbstractBenchmarkClient {
               }
           }
       }
-
+      log().debug("Probes available " + getProbeRunner().getProbes().size());
       if (getProbeRunner().getProbes().size() == 0) {
           return false;
       }

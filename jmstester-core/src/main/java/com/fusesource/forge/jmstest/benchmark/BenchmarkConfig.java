@@ -87,16 +87,19 @@ public class BenchmarkConfig implements Serializable {
   }
 
   public List<String> getSpringConfigurations() {
-    if (springConfigurations == null) {
+	  
+	log().debug("Spring configuration " + springConfigurations);  
+    if (springConfigurations == null || springConfigurations.isEmpty()) {
       log().debug(
           "Trying to read Spring configurations for BenchmarkConfig ID: "
               + getBenchmarkId());
       SpringConfigHelper sch = new SpringConfigHelper();
       sch.setBaseDir(getCfgBaseDirectory());
+      log().debug("cfg locations" + getConfigLocations());
       sch.setSpringConfigLocations(getConfigLocations());
 
       springConfigurations = new ArrayList<String>();
-
+      log().debug("sch Spring configuration " + sch.getSpringConfigLocations());  
       for (String fileName : sch.getSpringConfigLocations()) {
         addSpringConfig(new File(fileName));
       }
@@ -152,8 +155,12 @@ public class BenchmarkConfig implements Serializable {
   }
 
   public ApplicationContext getApplicationContext() {
+	
     if (applictionContext == null) {
+      log().info("getSpringConfigurations() --> " + getSpringConfigurations());
       if (getSpringConfigurations().size() > 0) {
+    	  
+    	log().info("tmpdir --> " + System.getProperty("java.io.tmpdir"));
         File tmpDir = new File(System.getProperty("java.io.tmpdir"), getBenchmarkId());
         if (tmpDir.exists()) {
           if (tmpDir.isFile()) {
@@ -173,19 +180,23 @@ public class BenchmarkConfig implements Serializable {
 
         int cfgNumber = 0;
         for (String config : getSpringConfigurations()) {
+          log().debug("Config to be written " + config);
           File cfgFile = new File(tmpDir, "SpringConfig-" + (cfgNumber)
               + ".xml");
-          tempFiles[cfgNumber++] = "file://" + cfgFile.getAbsolutePath();
+          tempFiles[cfgNumber++] = "file:/" + cfgFile.getAbsolutePath();
+          //tempFiles[cfgNumber++] = "file:\\\\localhost\\c$\\" + cfgFile.getAbsolutePath().substring(2);
+          
+          log().debug("file location " + tempFiles[cfgNumber - 1]);
           log().debug("Dumping : " + cfgFile.getAbsolutePath());
           try {
-            OutputStream os = new FileOutputStream(cfgFile);
-            IOUtils.write(config.getBytes(), os);
+            OutputStream os = new FileOutputStream(cfgFile);            
+            IOUtils.write(config.getBytes("UTF-8"), os);
             os.close();
           } catch (Exception e) {
             log().error("Error Dumping: " + cfgFile.getAbsolutePath());
           }
         }
-        log().debug("Creating ApplicationContext from temporary files.");
+        log().debug("Creating ApplicationContext from temporary files.");                
         applictionContext = new FileSystemXmlApplicationContext(tempFiles);
       } else {
         applictionContext = new FileSystemXmlApplicationContext();

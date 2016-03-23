@@ -151,6 +151,7 @@ public class BenchmarkValueRecorder extends AbstractBenchmarkExecutionContainer 
     ObjectOutputStream oos = null;
 
     try {
+     log().debug("stats recieved before writing " + stats.getValues());
       final String dateString = sdf.format(new Date());
       File targetDir = getBenchmarkWorkDirectory(stats.getClientId()
           .getBenchmarkId());
@@ -163,6 +164,8 @@ public class BenchmarkValueRecorder extends AbstractBenchmarkExecutionContainer 
       File rawData = new File(getBenchmarkWorkDirectory(stats.getClientId()
           .getBenchmarkId()), sdf.format(new Date()) + "-" + fileNames.length
           + ".raw");
+      
+      System.err.println("Creating raw file -> " + rawData.getAbsolutePath());
       log().debug(
           "Writing benchmark raw data to : " + rawData.getAbsolutePath());
       os = new FileOutputStream(rawData, false);

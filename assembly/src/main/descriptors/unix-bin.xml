@@ -19,6 +19,7 @@
   <id>bin</id>
   <formats>
     <format>tar.gz</format>
+    <format>zip</format>
   </formats>
   
   <fileSets>
@@ -31,6 +32,14 @@
       </includes>
       <fileMode>0755</fileMode>
       <directoryMode>0755</directoryMode>
+    </fileSet>
+    
+    <fileSet>
+      <directory>src/main/scripts/windows</directory>
+      <outputDirectory>bin</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>      
     </fileSet>
     
     <!-- Include the tutorial samples -->

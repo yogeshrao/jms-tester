@@ -32,7 +32,7 @@
         <property name="configLocations">
             <list>
                 <bean class="java.lang.String">
-                    <constructor-arg value="conf/testScripts/tutorial"/>
+                    <constructor-arg value="\\localhost\C$\Temp\jmstester-1.1-SNAPSHOT\conf\testScripts\tutorial"/>
                 </bean>
             </list>
         </property>
